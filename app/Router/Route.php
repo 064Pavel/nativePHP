@@ -10,19 +10,19 @@ class Route
 
     private $action;
 
-    public function __construct(string $uri, string $method, callable $action)
+    public function __construct(string $uri, string $method, $action)
     {
         $this->uri = $uri;
         $this->method = $method;
         $this->action = $action;
     }
 
-    public static function get(string $uri, callable $action): static
+    public static function get(string $uri, $action): static
     {
         return new static($uri, 'GET', $action);
     }
 
-    public static function post(string $uri, callable $action): static
+    public static function post(string $uri, $action): static
     {
         return new static($uri, 'POST', $action);
     }
@@ -37,7 +37,7 @@ class Route
         return $this->method;
     }
 
-    public function getAction(): callable
+    public function getAction()
     {
         return $this->action;
     }

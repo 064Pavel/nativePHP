@@ -1,9 +1,8 @@
 <?php
 
 use App\Router\Route;
+use App\Controllers\PageController;
 
 return [
-    Route::get('/page', function(){
-        include_once __DIR__ . '/../views/page.php';
-    })
+    Route::get('/page', [PageController::class, 'index']),
 ];

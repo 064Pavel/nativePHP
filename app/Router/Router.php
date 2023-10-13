@@ -23,7 +23,18 @@ class Router
             $this->notFoundHandler();
         }
 
-        $route->getAction()();
+        if(is_array($route->getAction())){
+
+            [$controller, $action] = $route->getAction();
+
+            $controller = new $controller();
+
+            // $controller->$action();
+
+            call_user_func([$controller, $action]);
+        } else {
+            $route->getAction()();
+        }
     }
 
     private function enable()
