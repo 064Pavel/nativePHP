@@ -2,6 +2,8 @@
 
 namespace App\Kernel\Router;
 
+use App\Kernel\Http\Request;
+
 class Router
 {
 
@@ -10,7 +12,10 @@ class Router
         'POST' => [],
     ];
 
-    public function __construct()
+
+    public function __construct(
+        private Request $request,
+    )
     {
         $this->enable();
     }
@@ -31,6 +36,7 @@ class Router
 
             // $controller->$action();
 
+            call_user_func([$controller, 'setRequest'], $this->request);
             call_user_func([$controller, $action]);
         } else {
             $route->getAction()();

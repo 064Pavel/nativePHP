@@ -13,7 +13,7 @@ class ServiceContainer
     public function __construct()
     {
         $this->request = Request::init();
-        $this->router = new Router();
+        $this->router = new Router($this->request);
     }
 
     public function getRequest(): Request
