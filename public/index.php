@@ -2,9 +2,10 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\App;
+use App\Kernel\App;
+use App\Kernel\Services\ServiceContainer;
 
-// require_once __DIR__ . '/../app/App.php';
-$app = new App();
+$serviceContainer = new ServiceContainer();
+$app = new App($serviceContainer);
 
 $app->run();
