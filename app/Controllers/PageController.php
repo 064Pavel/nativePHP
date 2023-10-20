@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Kernel\Controller\Controller;
+use App\Kernel\Http\Redirect;
 use App\Kernel\Http\Validator;
 
 class PageController extends Controller
@@ -19,7 +20,7 @@ class PageController extends Controller
         ]);
 
         if(!$data){
-            dd($this->request()->errors());
+            $this->redirectTo("/");
         } 
 
         dd("cool");
