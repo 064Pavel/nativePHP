@@ -19,6 +19,8 @@ class PageController extends Controller
             'name' => ['required', 'min:3', 'max:5']
         ]);
 
+        dd($this->session());
+
         if(!$data){
             $this->redirectTo("/");
         } 

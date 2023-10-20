@@ -6,6 +6,7 @@ use App\Kernel\Http\Redirect;
 use App\Kernel\Http\Request;
 use App\Kernel\Http\Validator;
 use App\Kernel\Router\Router;
+use App\Kernel\Session\Session;
 
 class ServiceContainer
 {
@@ -13,6 +14,7 @@ class ServiceContainer
     private Router $router;
     private Validator $validator;
     private Redirect $redirect;
+    private Session $session;
 
     public function __construct()
     {
@@ -23,7 +25,9 @@ class ServiceContainer
 
         $this->redirect = new Redirect();
 
-        $this->router = new Router($this->request, $this->redirect);
+        $this->session = new Session();
+
+        $this->router = new Router($this->request, $this->redirect, $this->session);
 
     }
 
