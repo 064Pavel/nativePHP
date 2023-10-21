@@ -2,11 +2,12 @@
 
 namespace App\Kernel\Router;
 
+use App\Kernel\Contracts\RouterInterface;
 use App\Kernel\Http\Redirect;
 use App\Kernel\Http\Request;
 use App\Kernel\Session\Session;
 
-class Router
+class Router implements RouterInterface
 {
 
     private $routes = [
