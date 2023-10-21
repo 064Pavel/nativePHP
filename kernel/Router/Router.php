@@ -2,10 +2,10 @@
 
 namespace App\Kernel\Router;
 
+use App\Kernel\Contracts\RedirectInterface;
+use App\Kernel\Contracts\RequestInterface;
 use App\Kernel\Contracts\RouterInterface;
-use App\Kernel\Http\Redirect;
-use App\Kernel\Http\Request;
-use App\Kernel\Session\Session;
+use App\Kernel\Contracts\SessionInterface;
 
 class Router implements RouterInterface
 {
@@ -17,9 +17,9 @@ class Router implements RouterInterface
 
 
     public function __construct(
-        private Request $request,
-        private Redirect $redirect,
-        private Session $session,
+        private RequestInterface $request,
+        private RedirectInterface $redirect,
+        private SessionInterface $session,
     )
     {
         $this->enable();

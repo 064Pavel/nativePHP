@@ -2,8 +2,6 @@
 
 namespace App\Kernel\Contracts;
 
-use App\Kernel\Http\Validator;
-
 interface RequestInterface
 {
     public static function init(): static;
@@ -16,7 +14,7 @@ interface RequestInterface
 
     public function input(string $key, $default = null): mixed;
 
-    public function setValidator(Validator $validator): void;
+    public function setValidator(ValidatorInterface $validator): void;
 
     public function validate(array $rules): bool;
 
