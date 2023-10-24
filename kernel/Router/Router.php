@@ -2,9 +2,12 @@
 
 namespace App\Kernel\Router;
 
-use App\Kernel\Http\Request;
+use App\Kernel\Contracts\RedirectInterface;
+use App\Kernel\Contracts\RequestInterface;
+use App\Kernel\Contracts\RouterInterface;
+use App\Kernel\Contracts\SessionInterface;
 
-class Router
+class Router implements RouterInterface
 {
 
     private $routes = [
@@ -14,7 +17,9 @@ class Router
 
 
     public function __construct(
-        private Request $request,
+        private RequestInterface $request,
+        private RedirectInterface $redirect,
+        private SessionInterface $session,
     )
     {
         $this->enable();
@@ -37,6 +42,9 @@ class Router
             // $controller->$action();
 
             call_user_func([$controller, 'setRequest'], $this->request);
+            call_user_func([$controller, 'setRedirect'], $this->redirect);
+            call_user_func([$controller, 'setSession'], $this->session);
+
             call_user_func([$controller, $action]);
         } else {
             $route->getAction()();
