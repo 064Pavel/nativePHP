@@ -38,4 +38,8 @@ class Database
         }
     }
 
+    public function getPDO(): PDO
+    {
+        return $this->pdo;
+    }
 }

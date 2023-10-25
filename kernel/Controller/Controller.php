@@ -2,10 +2,12 @@
 
 namespace App\Kernel\Controller;
 
+use App\Kernel\Contracts\QueryBuilderInterface;
 use App\Kernel\Contracts\RedirectInterface;
 use App\Kernel\Contracts\RequestInterface;
 use App\Kernel\Contracts\SessionInterface;
 use App\Kernel\Database\Database;
+use App\Kernel\QueryBuilder\QueryBuilder;
 
 abstract class Controller
 {
@@ -13,6 +15,7 @@ abstract class Controller
     private RedirectInterface $redirect;
     private SessionInterface $session;
     private Database $database;
+    private QueryBuilderInterface $queryBuilder;
 
     public function request(): RequestInterface
     {
@@ -52,5 +55,15 @@ abstract class Controller
     public function setDatabase(Database $database): void
     {
         $this->database = $database;
+    }
+
+    public function query(): QueryBuilderInterface
+    {
+        return $this->queryBuilder;
+    }
+
+    public function setQueryBuilder(QueryBuilderInterface $queryBuilder): void
+    {
+        $this->queryBuilder = $queryBuilder;
     }
 }

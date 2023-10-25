@@ -2,6 +2,7 @@
 
 namespace App\Kernel\Router;
 
+use App\Kernel\Contracts\QueryBuilderInterface;
 use App\Kernel\Contracts\RedirectInterface;
 use App\Kernel\Contracts\RequestInterface;
 use App\Kernel\Contracts\RouterInterface;
@@ -22,6 +23,7 @@ class Router implements RouterInterface
         private RedirectInterface $redirect,
         private SessionInterface $session,
         private Database $database,
+        private QueryBuilderInterface $queryBuilder,
     )
     {
         $this->enable();
@@ -47,6 +49,7 @@ class Router implements RouterInterface
             call_user_func([$controller, 'setRedirect'], $this->redirect);
             call_user_func([$controller, 'setSession'], $this->session);
             call_user_func([$controller, 'setDatabase'], $this->database);
+            call_user_func([$controller, 'setQueryBuilder'], $this->queryBuilder);
 
             call_user_func([$controller, $action]);
         } else {

@@ -3,6 +3,7 @@
 namespace App\Kernel\Services;
 
 use App\Kernel\Config\Config;
+use App\Kernel\Contracts\QueryBuilderInterface;
 use App\Kernel\Contracts\RedirectInterface;
 use App\Kernel\Contracts\RequestInterface;
 use App\Kernel\Contracts\RouterInterface;
@@ -12,6 +13,7 @@ use App\Kernel\Database\Database;
 use App\Kernel\Http\Redirect;
 use App\Kernel\Http\Request;
 use App\Kernel\Http\Validator;
+use App\Kernel\QueryBuilder\QueryBuilder;
 use App\Kernel\Router\Router;
 use App\Kernel\Session\Session;
 
@@ -24,6 +26,7 @@ class ServiceContainer
     private SessionInterface $session;
     private Config $config;
     private Database $database;
+    private QueryBuilderInterface $queryBuilder;
 
     public function __construct()
     {
@@ -40,7 +43,10 @@ class ServiceContainer
 
         $this->database = new Database($this->config);
 
-        $this->router = new Router($this->request, $this->redirect, $this->session, $this->database);
+        $this->queryBuilder = new QueryBuilder($this->database);
+
+        $this->router = new Router($this->request, $this->redirect, $this->session, $this->database, $this->queryBuilder);
+
     }
 
     public function getRequest(): Request
