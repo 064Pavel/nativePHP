@@ -21,6 +21,8 @@ class PageController extends Controller
 
         // dd($this->session());
 
+        dd($this->query());
+
         if(!$data){
             $this->redirectTo("/");
         } 
