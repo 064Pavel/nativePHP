@@ -5,12 +5,14 @@ namespace App\Kernel\Controller;
 use App\Kernel\Contracts\RedirectInterface;
 use App\Kernel\Contracts\RequestInterface;
 use App\Kernel\Contracts\SessionInterface;
+use App\Kernel\Database\Database;
 
 abstract class Controller
 {
     private RequestInterface $request;
     private RedirectInterface $redirect;
     private SessionInterface $session;
+    private Database $database;
 
     public function request(): RequestInterface
     {
@@ -40,5 +42,15 @@ abstract class Controller
     public function redirectTo(string $url): void
     {
         $this->redirect->to($url);
+    }
+
+    public function database(): Database
+    {
+        return $this->database;
+    }
+
+    public function setDatabase(Database $database): void
+    {
+        $this->database = $database;
     }
 }

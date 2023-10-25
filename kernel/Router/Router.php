@@ -6,6 +6,7 @@ use App\Kernel\Contracts\RedirectInterface;
 use App\Kernel\Contracts\RequestInterface;
 use App\Kernel\Contracts\RouterInterface;
 use App\Kernel\Contracts\SessionInterface;
+use App\Kernel\Database\Database;
 
 class Router implements RouterInterface
 {
@@ -20,6 +21,7 @@ class Router implements RouterInterface
         private RequestInterface $request,
         private RedirectInterface $redirect,
         private SessionInterface $session,
+        private Database $database,
     )
     {
         $this->enable();
@@ -44,6 +46,7 @@ class Router implements RouterInterface
             call_user_func([$controller, 'setRequest'], $this->request);
             call_user_func([$controller, 'setRedirect'], $this->redirect);
             call_user_func([$controller, 'setSession'], $this->session);
+            call_user_func([$controller, 'setDatabase'], $this->database);
 
             call_user_func([$controller, $action]);
         } else {

@@ -34,9 +34,6 @@ class Database
                 $password
             );
         } catch (\PDOException $exception) {
-            dd(       "$driver:host=$host;port=$port;dbname=$database;charset=$charset",
-            $username,
-            $password);
             exit("Database connection failed: {$exception->getMessage()}");
         }
     }

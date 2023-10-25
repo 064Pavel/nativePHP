@@ -36,12 +36,11 @@ class ServiceContainer
 
         $this->session = new Session();
 
-        $this->router = new Router($this->request, $this->redirect, $this->session);
-
         $this->config = new Config();
 
         $this->database = new Database($this->config);
 
+        $this->router = new Router($this->request, $this->redirect, $this->session, $this->database);
     }
 
     public function getRequest(): Request
