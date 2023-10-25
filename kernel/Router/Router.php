@@ -9,6 +9,8 @@ use App\Kernel\Contracts\ResponseInterface;
 use App\Kernel\Contracts\RouterInterface;
 use App\Kernel\Contracts\SessionInterface;
 use App\Kernel\Database\Database;
+use App\Kernel\Middleware\Middleware;
+use App\Kernel\Middleware\AbstractMiddleware;
 
 class Router implements RouterInterface
 {
@@ -37,6 +39,17 @@ class Router implements RouterInterface
 
         if(!$route){
             $this->notFoundHandler();
+        }
+
+        if($route->hasMiddlewares()){
+            foreach($route->getMiddlewares() as $middleware){
+
+                /** @var AbstractMiddleware $middleware */
+
+                $middleware = new $middleware($this->request, $this->redirect);
+
+                $middleware->handle();
+            }
         }
 
         if(is_array($route->getAction())){
