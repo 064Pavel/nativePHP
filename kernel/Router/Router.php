@@ -5,9 +5,12 @@ namespace App\Kernel\Router;
 use App\Kernel\Contracts\QueryBuilderInterface;
 use App\Kernel\Contracts\RedirectInterface;
 use App\Kernel\Contracts\RequestInterface;
+use App\Kernel\Contracts\ResponseInterface;
 use App\Kernel\Contracts\RouterInterface;
 use App\Kernel\Contracts\SessionInterface;
 use App\Kernel\Database\Database;
+use App\Kernel\Middleware\Middleware;
+use App\Kernel\Middleware\AbstractMiddleware;
 
 class Router implements RouterInterface
 {
@@ -24,6 +27,7 @@ class Router implements RouterInterface
         private SessionInterface $session,
         private Database $database,
         private QueryBuilderInterface $queryBuilder,
+        private ResponseInterface $response,
     )
     {
         $this->enable();
@@ -35,6 +39,17 @@ class Router implements RouterInterface
 
         if(!$route){
             $this->notFoundHandler();
+        }
+
+        if($route->hasMiddlewares()){
+            foreach($route->getMiddlewares() as $middleware){
+
+                /** @var AbstractMiddleware $middleware */
+
+                $middleware = new $middleware($this->request, $this->redirect);
+
+                $middleware->handle();
+            }
         }
 
         if(is_array($route->getAction())){
@@ -50,6 +65,7 @@ class Router implements RouterInterface
             call_user_func([$controller, 'setSession'], $this->session);
             call_user_func([$controller, 'setDatabase'], $this->database);
             call_user_func([$controller, 'setQueryBuilder'], $this->queryBuilder);
+            call_user_func([$controller, 'setResponse'], $this->response);
 
             call_user_func([$controller, $action]);
         } else {

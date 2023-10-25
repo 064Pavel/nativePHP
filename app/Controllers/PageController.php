@@ -21,7 +21,9 @@ class PageController extends Controller
 
         // dd($this->session());
 
-        dd($this->query());
+        dd($this->response()->setStatusCode(200)
+        ->setJsonContent(['message' => 'Hello, REST API!'])
+        ->send());
 
         if(!$data){
             $this->redirectTo("/");

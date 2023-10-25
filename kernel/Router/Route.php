@@ -4,27 +4,22 @@ namespace App\Kernel\Router;
 
 class Route
 {
-    private string $uri;
+    public function __construct(
+        private string $uri,
+        private string $method,
+        private $action,
+        private array $middlewares = [],
+    )
+    {}
 
-    private string $method;
-
-    private $action;
-
-    public function __construct(string $uri, string $method, $action)
+    public static function get(string $uri, $action, array $middlewares = []): static
     {
-        $this->uri = $uri;
-        $this->method = $method;
-        $this->action = $action;
+        return new static($uri, 'GET', $action, $middlewares);
     }
 
-    public static function get(string $uri, $action): static
+    public static function post(string $uri, $action, array $middlewares = []): static
     {
-        return new static($uri, 'GET', $action);
-    }
-
-    public static function post(string $uri, $action): static
-    {
-        return new static($uri, 'POST', $action);
+        return new static($uri, 'POST', $action, $middlewares);
     }
 
     public function getUri(): string
@@ -42,5 +37,13 @@ class Route
         return $this->action;
     }
 
+    public function getMiddlewares(): array
+    {
+        return $this->middlewares;
+    }
 
+    public function hasMiddlewares(): bool
+    {
+        return !empty($this->middlewares);
+    }
 }
