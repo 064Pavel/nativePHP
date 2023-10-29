@@ -18,6 +18,10 @@ class ComposerStaticInitb0ca4d53369a7bcda52168b22dce0f92
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\VarDumper\\' => 28,
         ),
+        'F' => 
+        array (
+            'Firebase\\JWT\\' => 13,
+        ),
         'A' => 
         array (
             'App\\Kernel\\' => 11,
@@ -33,6 +37,10 @@ class ComposerStaticInitb0ca4d53369a7bcda52168b22dce0f92
         'Symfony\\Component\\VarDumper\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/var-dumper',
+        ),
+        'Firebase\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
         'App\\Kernel\\' => 
         array (
