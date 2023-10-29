@@ -8,6 +8,6 @@ class TestMiddleware extends AbstractMiddleware
 {
     public function handle(): void
     {
-        dump("middleware!");
+        //...
     }
 }

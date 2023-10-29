@@ -46,4 +46,15 @@ class Response implements ResponseInterface
 
         return $this->content;
     }
+
+    public function sendErr(string $errMessage): string
+    {
+        http_response_code($this->statusCode = 500);
+
+        foreach ($this->headers as $name => $value) {
+            header("$name: $value");
+        }
+
+        return $errMessage;
+    }
 }

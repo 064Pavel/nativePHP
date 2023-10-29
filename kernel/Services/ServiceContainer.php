@@ -15,6 +15,7 @@ use App\Kernel\Http\Redirect;
 use App\Kernel\Http\Request;
 use App\Kernel\Http\Response;
 use App\Kernel\Http\Validator;
+use App\Kernel\JWT\JWTHandler;
 use App\Kernel\QueryBuilder\QueryBuilder;
 use App\Kernel\Router\Router;
 use App\Kernel\Session\Session;
@@ -30,6 +31,7 @@ class ServiceContainer
     private Database $database;
     private QueryBuilderInterface $queryBuilder;
     private ResponseInterface $response;
+    private JWTHandler $jwt;
 
     public function __construct()
     {
@@ -50,7 +52,16 @@ class ServiceContainer
 
         $this->response = new Response();
 
-        $this->router = new Router($this->request, $this->redirect, $this->session, $this->database, $this->queryBuilder, $this->response);
+        $this->jwt = new JWTHandler($this->config, $this->response);
+
+        $this->router = new Router(
+                                    $this->request,
+                                    $this->redirect,
+                                    $this->session,
+                                    $this->database,
+                                    $this->queryBuilder,
+                                    $this->response
+            );
 
     }
 
